@@ -22,4 +22,13 @@
         @gnctr2017
     </ion-item>
   </ion-list>
+    <ion-list>
+      <ion-list-header>Executive Committee</ion-list-header>
+      <ion-item *ngFor="let item of contactList; let i = index">
+        <ion-avatar item-left>
+          <img src="{{item.photoSmall}}">
+        </ion-avatar>
+        {{item.name}} | {{item.title}}
+      </ion-item>
+    </ion-list>
 </ion-content>

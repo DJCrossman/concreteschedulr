@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
+import {ContactList} from '../../app/constants/contacts';
 
 @Component({
   selector: 'page-contact',
@@ -8,8 +9,10 @@ import { NavController } from 'ionic-angular';
 })
 export class ContactPage {
 
-  constructor(public navCtrl: NavController) {
+    public contactList: Array<Object>;
 
-  }
+    constructor(public navCtrl: NavController) {
+        this.contactList = ContactList;
+    }
 
 }
