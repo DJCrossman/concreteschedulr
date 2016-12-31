@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{event.title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="padding">
+  <ion-card>
+    <img src="{{event.photo}}" *ngIf="event.photo">
+    <ion-card-content>
+     <ion-card-title>
+      <h1>{{event.title}}</h1>
+     </ion-card-title>
+      <ion-list no-lines>
+        <ion-item text-wrap>
+          <ion-icon name="clock" item-left></ion-icon>
+          <p>{{event.startDateFormatted}} - {{event.endDateFormatted}}</p>
+        </ion-item>
+        <ion-item *ngIf="event.message" text-wrap>
+          <ion-icon name="list" item-left></ion-icon>
+          <p>{{event.message}}</p>
+        </ion-item>
+        <ion-item *ngIf="event.location" text-wrap>
+          <ion-icon name="pin" item-left>
+          </ion-icon>
+          <p>{{event.location}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

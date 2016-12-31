@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import * as Moment from 'moment';
-import {CalendarList} from '../../app/constants/calendar';
+import { CalendarList } from '../../app/constants/calendar';
+import { EventDetailsPage } from '../event-details/event-details';
 
 @Component({
   selector: 'page-home',
@@ -10,13 +11,16 @@ import {CalendarList} from '../../app/constants/calendar';
 })
 export class HomePage {
 
-    public calendarList: Array<Object>;
+    public calendarList: any[];
 
     constructor(public navCtrl: NavController) {
         CalendarList.forEach((i) => {
             Object.assign(
                 i,
-                {startDateFormatted: Moment(i.startDate).format('h:mma MMMM Do, YYYY')}
+                {
+                    startDateFormatted: Moment(i.startDate).format('h:mma MMMM Do, YYYY'),
+                    endDateFormatted: Moment(i.endDate).format('h:mma MMMM Do, YYYY')
+                }
             );
         });
         CalendarList.sort((a,b) => {
@@ -29,6 +33,10 @@ export class HomePage {
             let bDate = new Date(a.endDate);
             return aDate < bDate;
         });
+    }
+
+    goToEventDetail(event) {
+        this.navCtrl.push(EventDetailsPage, event);
     }
 
 }
