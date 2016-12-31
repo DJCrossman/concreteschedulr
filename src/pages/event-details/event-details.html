@@ -20,10 +20,10 @@
           <ion-icon name="list" item-left></ion-icon>
           <p>{{event.message}}</p>
         </ion-item>
-        <ion-item *ngIf="event.location" text-wrap>
+        <ion-item *ngIf="event.location" (click)="goToEventLocation(event.location)" text-wrap>
           <ion-icon name="pin" item-left>
           </ion-icon>
-          <p>{{event.location}}</p>
+          <p>{{event.location.name}}</p>
         </ion-item>
       </ion-list>
     </ion-card-content>

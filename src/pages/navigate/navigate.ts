@@ -5,7 +5,8 @@ import {
 } from 'ionic-native';
 import { Component } from '@angular/core';
 
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
+import { DefaultLocation } from '../../app/constants/location';
 
 @Component({
   selector: 'page-navigate',
@@ -14,16 +15,24 @@ import { NavController, Platform } from 'ionic-angular';
 
 export class NavigatePage {
 
+    public eventLocation: any;
     map: GoogleMap;
 
-    constructor(public navCtrl: NavController, public platform: Platform) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform) {
+        this.eventLocation = navParams.data;
         platform.ready().then(() => {
             if(platform.is('ios') || platform.is('android')) this.loadMap();
         });
     }
 
     loadMap() {
-        let location = new GoogleMapsLatLng(49.8900202,-97.1436709);
+        let lat = DefaultLocation.lat;
+        let lng = DefaultLocation.lng;
+        if(this.eventLocation) {
+            lat = this.eventLocation.lat || DefaultLocation.lat;
+            lng = this.eventLocation.lng || DefaultLocation.lng;
+        }
+        let location = new GoogleMapsLatLng(lat, lng);
 
         this.map = new GoogleMap('map', {
           'backgroundColor': 'white',

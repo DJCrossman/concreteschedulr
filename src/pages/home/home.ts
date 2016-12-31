@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
 import * as Moment from 'moment';
+import { NavController } from 'ionic-angular';
 import { CalendarList } from '../../app/constants/calendar';
 import { EventDetailsPage } from '../event-details/event-details';
 

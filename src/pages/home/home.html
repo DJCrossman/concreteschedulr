@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content class="padding">
-    <ion-card *ngFor="let item of calendarList; let i = index">
+    <ion-card *ngFor="let item of calendarList; let i = index" (click)="goToEventDetail(item)">
 
       <ion-item>
         <ion-avatar item-left>
@@ -18,17 +18,8 @@
       <img src="{{item.photo}}" *ngIf="item.photo">
 
       <ion-card-content>
-        <p>{{item.description}}</p>
+        <p>{{item.message}}</p>
       </ion-card-content>
-
-      <ion-row>
-        <ion-col>
-          <button ion-button icon-left clear small (click)="goToEventDetail(item)">
-            <ion-icon name="text"></ion-icon>
-            See more...
-          </button>
-        </ion-col>
-      </ion-row>
 
     </ion-card>
 </ion-content>
