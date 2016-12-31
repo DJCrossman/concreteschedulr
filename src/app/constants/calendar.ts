@@ -1,5 +1,26 @@
 export const CalendarList = [
     {
+        startDate: "2016-11-15T00:00:00Z",
+        endDate: "2016-11-15T23:59:59Z",
+        message: "The official rules for GNCTR 2017 are now available for download at your convenience. It’s important that all teams read the rules throughly to ensure that your designs meet all the necessary criteria for this year’s competition.",
+        location: "",
+        title: "Safety Reports Competing Teams Due"
+    },
+    {
+        startDate: "2017-01-15T00:00:00Z",
+        endDate: "2017-01-15T23:59:59Z",
+        message: "The official rules for GNCTR 2017 are now available for download at your convenience. It’s important that all teams read the rules throughly to ensure that your designs meet all the necessary criteria for this year’s competition.",
+        location: "",
+        title: "Safety Reports Non-Competing Teams Due"
+    },
+    {
+        startDate: "2017-01-15T00:00:00Z",
+        endDate: "2017-01-15T23:59:59Z",
+        message: "The official rules for GNCTR 2017 are now available for download at your convenience. It’s important that all teams read the rules throughly to ensure that your designs meet all the necessary criteria for this year’s competition.",
+        location: "",
+        title: "Technical Reports Due"
+    },
+    {
         startDate: "2017-02-01T17:00:00Z",
         endDate: "2017-02-02T00:00:00Z",
         message: "",

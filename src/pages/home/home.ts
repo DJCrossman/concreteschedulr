@@ -24,7 +24,11 @@ export class HomePage {
             let bDate = new Date(b.startDate);
             return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);
         });
-        this.calendarList = CalendarList;
+        this.calendarList = CalendarList.filter((a) => {
+            let aDate = new Date(Date.now());
+            let bDate = new Date(a.endDate);
+            return aDate < bDate;
+        });
     }
 
 }
