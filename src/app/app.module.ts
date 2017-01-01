@@ -5,6 +5,7 @@ import { NavigatePage } from '../pages/navigate/navigate';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { EventDetailsPage } from '../pages/event-details/event-details';
+import { ContactDetailsPage } from '../pages/contact-details/contact-details';
 import { TabsPage } from '../pages/tabs/tabs';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { TabsPage } from '../pages/tabs/tabs';
     MyApp,
     NavigatePage,
     ContactPage,
+    ContactDetailsPage,
     HomePage,
     EventDetailsPage,
     TabsPage
@@ -24,6 +26,7 @@ import { TabsPage } from '../pages/tabs/tabs';
     MyApp,
     NavigatePage,
     ContactPage,
+    ContactDetailsPage,
     HomePage,
     EventDetailsPage,
     TabsPage

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{contact.title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="padding">
+  <ion-card>
+    <img src="{{contact.photo}}" *ngIf="contact.photo">
+    <ion-card-content>
+     <ion-card-title>
+      <h1>{{contact.title}}</h1>
+     </ion-card-title>
+      <ion-list no-lines>
+        <ion-item *ngIf="contact.email">
+          <ion-icon name="mail" item-left></ion-icon>
+          <p>{{contact.email}}</p>
+        </ion-item>
+        <ion-item *ngIf="contact.phone">
+          <ion-icon name="call" item-left>
+          </ion-icon>
+          {{contact.phone}}
+        </ion-item>
+        <ion-item *ngIf="contact.description" text-wrap>
+          <ion-icon name="list" item-left></ion-icon>
+          <p>{{contact.description}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
