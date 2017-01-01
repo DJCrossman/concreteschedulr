@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{contact.title}}</ion-title>
+    <ion-title>{{contact.name}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -9,17 +9,17 @@
     <img src="{{contact.photo}}" *ngIf="contact.photo">
     <ion-card-content>
      <ion-card-title>
-      <h1>{{contact.title}}</h1>
+      <h1>{{contact.name}} | {{contact.title}}</h1>
      </ion-card-title>
       <ion-list no-lines>
-        <ion-item *ngIf="contact.email">
+        <ion-item *ngIf="contact.email" (click)="onClickEmailAddress(contact.email)">
           <ion-icon name="mail" item-left></ion-icon>
           <p>{{contact.email}}</p>
         </ion-item>
-        <ion-item *ngIf="contact.phone">
+        <ion-item *ngIf="contact.phone" (click)="onClickCallNumber(contact.phone)">
           <ion-icon name="call" item-left>
           </ion-icon>
-          {{contact.phone}}
+          <p>{{contact.phone}}</p>
         </ion-item>
         <ion-item *ngIf="contact.description" text-wrap>
           <ion-icon name="list" item-left></ion-icon>
