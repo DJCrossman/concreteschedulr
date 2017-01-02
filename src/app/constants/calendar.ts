@@ -21,6 +21,11 @@ export const CalendarList = [
         startDate: "2017-02-01T17:00:00Z",
         endDate: "2017-02-02T00:00:00Z",
         message: "",
+        location: {
+            name: "Delta Hotels by Marriott Winnipeg",
+            lat: 49.8900202,
+            lng: -97.1436709
+        },
         title: "Hotel Check-in & Competition Registration"
     },
     {
