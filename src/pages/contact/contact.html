@@ -24,7 +24,7 @@
   </ion-list>
     <ion-list>
       <ion-list-header>Executive Committee</ion-list-header>
-      <ion-item *ngFor="let item of contactList; let i = index" (click)="goToContactDetail(item)">
+      <ion-item *ngFor="let item of contacts; let i = index" (click)="goToContactDetail(item)">
         <ion-avatar item-left>
           <img src="{{item.photoSmall}}">
         </ion-avatar>

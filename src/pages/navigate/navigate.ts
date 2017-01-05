@@ -11,10 +11,12 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { DefaultLocation } from '../../app/constants/location';
 import { CalendarList } from '../../app/constants/calendar';
+import { ConferenceService } from '../../providers/conference-service';
 
 @Component({
   selector: 'page-navigate',
-  templateUrl: 'navigate.html'
+  templateUrl: 'navigate.html',
+  providers: [ConferenceService]
 })
 
 export class NavigatePage {
@@ -22,7 +24,11 @@ export class NavigatePage {
     public eventLocation: any;
     map: GoogleMap;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform) {
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        public platform: Platform,
+        public conferenceService: ConferenceService) {
         this.eventLocation = navParams.data;
         platform.ready().then(() => {
             if(platform.is('ios') || platform.is('android')) this.loadMap();
@@ -62,17 +68,19 @@ export class NavigatePage {
 
         this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
             console.log('Map is ready!');
-            this.getLocationList(CalendarList).forEach((l) => {
-                let markerOptions: GoogleMapsMarkerOptions = {
-                    position: new GoogleMapsLatLng(l.lat, l.lng),
-                    animation: GoogleMapsAnimation.DROP,
-                    title: l.name
-                };
+            this.conferenceService.load().then(data => {
+                this.getLocationList(data.calendar).forEach((l) => {
+                    let markerOptions: GoogleMapsMarkerOptions = {
+                        position: new GoogleMapsLatLng(l.lat, l.lng),
+                        animation: GoogleMapsAnimation.DROP,
+                        title: l.name
+                    };
 
-                this.map.addMarker(markerOptions)
-                    .then((marker: GoogleMapsMarker) => {
-                        console.log('Marker dropped.');
-                    });
+                    this.map.addMarker(markerOptions)
+                        .then((marker: GoogleMapsMarker) => {
+                            console.log('Marker dropped.');
+                        });
+                });
             });
         });
     }

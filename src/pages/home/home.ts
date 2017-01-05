@@ -2,39 +2,46 @@ import { Component } from '@angular/core';
 
 import * as moment from 'moment';
 import { NavController } from 'ionic-angular';
-import { CalendarList } from '../../app/constants/calendar';
 import { EventDetailsPage } from '../event-details/event-details';
+import { ConferenceService } from '../../providers/conference-service';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [ConferenceService]
 })
 export class HomePage {
 
-    public calendarList: any[];
-    public groupedCalendarList: any[];
+    public calendarEvents: any[];
+    public groupedCalendarEvents: any[];
 
-    constructor(public navCtrl: NavController) {
-        CalendarList.forEach((i) => {
-            Object.assign(
-                i,
-                {
-                    startDateFormatted: moment(i.startDate).format('h:mma MMMM Do, YYYY'),
-                    endDateFormatted: moment(i.endDate).format('h:mma MMMM Do, YYYY')
-                }
-            );
+    constructor(public navCtrl: NavController, public conferenceService: ConferenceService) {
+        this.loadCalendarEvents();
+    }
+
+    loadCalendarEvents() {
+        this.conferenceService.load().then(data => {
+            data.calendar.forEach((i) => {
+                Object.assign(
+                    i,
+                    {
+                        startDateFormatted: moment(i.startDate).format('h:mma MMMM Do, YYYY'),
+                        endDateFormatted: moment(i.endDate).format('h:mma MMMM Do, YYYY')
+                    }
+                );
+            });
+            data.calendar.sort((a,b) => {
+                let aDate = new Date(a.startDate);
+                let bDate = new Date(b.startDate);
+                return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);
+            });
+            this.calendarEvents = data.calendar.filter((a) => {
+                let aDate = new Date(Date.now());
+                let bDate = new Date(a.endDate);
+                return aDate < bDate;
+            });
+            this.groupedCalendarEvents = this.groupEventsByDay(this.calendarEvents);
         });
-        CalendarList.sort((a,b) => {
-            let aDate = new Date(a.startDate);
-            let bDate = new Date(b.startDate);
-            return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);
-        });
-        this.calendarList = CalendarList.filter((a) => {
-            let aDate = new Date(Date.now());
-            let bDate = new Date(a.endDate);
-            return aDate < bDate;
-        });
-        this.groupedCalendarList = this.groupEventsByDay(this.calendarList);
     }
 
     goToEventDetail(event) {
@@ -42,7 +49,7 @@ export class HomePage {
     }
 
     groupEventsByDay(calendar) {
-        let eventGroupList = [];
+        let eventGroupEvents = [];
         let groupBy = (xs, key) => {
             return xs.reduce((rv, x) => {
                 (rv[moment(x[key]).format('LL')] = rv[moment(x[key]).format('LL')] || []).push(x);
@@ -51,9 +58,9 @@ export class HomePage {
         };
         let groupedObject = groupBy(calendar, 'startDate');
         Object.keys(groupedObject).forEach((k) => {
-            eventGroupList.push({label: k, group: groupedObject[k]});
+            eventGroupEvents.push({label: k, group: groupedObject[k]});
         });
-        return eventGroupList.sort((a,b) => {
+        return eventGroupEvents.sort((a,b) => {
             let aDate = new Date(a.label);
             let bDate = new Date(b.label);
             return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);

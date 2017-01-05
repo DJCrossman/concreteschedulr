@@ -6,9 +6,9 @@
 
 <ion-content class="padding">
 
-    <ion-list *ngFor="let groupedList of groupedCalendarList; let j = index">
-      <ion-list-header>{{groupedList.label}}</ion-list-header>
-      <ion-card *ngFor="let item of groupedList.group; let i = index" (click)="goToEventDetail(item)">
+    <ion-list *ngFor="let groupedEvents of groupedCalendarEvents; let j = index">
+      <ion-list-header>{{groupedEvents.label}}</ion-list-header>
+      <ion-card *ngFor="let item of groupedEvents.group; let i = index" (click)="goToEventDetail(item)">
 
         <ion-item>
           <ion-avatar item-left>
