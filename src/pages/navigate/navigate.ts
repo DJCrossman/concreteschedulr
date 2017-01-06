@@ -10,7 +10,6 @@ import { Component } from '@angular/core';
 
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { DefaultLocation } from '../../app/constants/location';
-import { CalendarList } from '../../app/constants/calendar';
 import { ConferenceService } from '../../providers/conference-service';
 
 @Component({
@@ -28,23 +27,33 @@ export class NavigatePage {
         public navCtrl: NavController,
         public navParams: NavParams,
         public platform: Platform,
-        public conferenceService: ConferenceService) {
-        this.eventLocation = navParams.data;
-        platform.ready().then(() => {
-            if(platform.is('ios') || platform.is('android')) this.loadMap();
-        });
+        public conferenceService: ConferenceService) { }
+
+    ionViewDidEnter() {
+        this.eventLocation = this.navCtrl.parent.viewCtrl.instance.data;
+        if(this.map) {
+            if(this.platform.is('core')) return;
+            this.map.one('resize');
+        }
+        this.platform.ready().then(() => { this.loadMap(); });
     }
 
     loadMap() {
         let lat = DefaultLocation.lat;
         let lng = DefaultLocation.lng;
         if(this.eventLocation) {
+            console.log("Loading: " + this.eventLocation.name);
             lat = this.eventLocation.lat || DefaultLocation.lat;
             lng = this.eventLocation.lng || DefaultLocation.lng;
         }
         let location = new GoogleMapsLatLng(lat, lng);
 
-        this.map = new GoogleMap('map', {
+        if(this.map && this.eventLocation) {
+            this.setEventLocation(location, 15);
+            return;
+        }
+
+        this.initializeMap({
             'backgroundColor': 'white',
             'controls': {
                 'compass': true,
@@ -65,24 +74,42 @@ export class NavigatePage {
                 'bearing': 50
             }
         });
+        if(this.platform.is('core')) return;
 
         this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
-            console.log('Map is ready!');
-            this.conferenceService.load().then(data => {
-                this.getLocationList(data.calendar).forEach((l) => {
-                    let markerOptions: GoogleMapsMarkerOptions = {
-                        position: new GoogleMapsLatLng(l.lat, l.lng),
-                        animation: GoogleMapsAnimation.DROP,
-                        title: l.name
-                    };
+            this.onMapLoad();
+        });
+    }
 
-                    this.map.addMarker(markerOptions)
-                        .then((marker: GoogleMapsMarker) => {
-                            console.log('Marker dropped.');
-                        });
-                });
+    initializeMap(options) {
+        this.map = new GoogleMap('map', options);
+    }
+
+    onMapLoad() {
+        console.log('Map is ready!');
+        this.conferenceService.load().then(data => {
+            this.map.clear();
+            this.getLocationList(data.calendar).forEach((l) => {
+                let markerOptions: GoogleMapsMarkerOptions = {
+                    position: new GoogleMapsLatLng(l.lat, l.lng),
+                    animation: GoogleMapsAnimation.DROP,
+                    title: l.name
+                };
+                this.addMarkerToMap(markerOptions);
             });
         });
+    }
+
+    addMarkerToMap(markerOptions) {
+        this.map.addMarker(markerOptions)
+            .then((marker: GoogleMapsMarker) => {
+                console.log('Marker dropped.');
+            });
+    }
+
+    setEventLocation(latLng, value) {
+        this.map.setCenter(latLng);
+        this.map.setZoom(value);
     }
 
     getLocationList(calendar) {
