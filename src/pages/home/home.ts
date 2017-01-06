@@ -22,11 +22,17 @@ export class HomePage {
     loadCalendarEvents() {
         this.conferenceService.load().then(data => {
             data.calendar.forEach((i) => {
+                let start = moment(i.startDate).format('h:mma');
+                let end = moment(i.endDate).format('h:mma');
+                let range = moment(i.startDate).isSame(i.endDate, 'day') ?
+                    [moment(i.startDate).format('ddd MMMM Do, h:mma'), moment(i.endDate).format('h:mma')].join(' - ') :
+                    [moment(i.startDate).format('ddd MMMM Do, YYYY, h:mma'), moment(i.endDate).format('ddd MMMM Do, YYYY, h:mma')].join(' - ');
                 Object.assign(
                     i,
                     {
-                        startDateFormatted: moment(i.startDate).format('h:mma MMMM Do, YYYY'),
-                        endDateFormatted: moment(i.endDate).format('h:mma MMMM Do, YYYY')
+                        startDateFormatted: start,
+                        endDateFormatted: end,
+                        dateRangeFormatted: range
                     }
                 );
             });
