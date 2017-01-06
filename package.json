@@ -37,11 +37,7 @@
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
     "cordova-plugin-googlemaps",
-    {
-      "locator": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
-      "id": "com.googlemaps.ios"
-    },
-    "mx.ferreyra.callnumber",
+    "call-number",
     "cordova-plugin-email"
   ],
   "cordovaPlatforms": [
