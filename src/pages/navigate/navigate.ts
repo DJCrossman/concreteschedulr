@@ -8,7 +8,7 @@ import {
 } from 'ionic-native';
 import { Component } from '@angular/core';
 
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform, LoadingController } from 'ionic-angular';
 import { DefaultLocation } from '../../app/constants/location';
 import { ConferenceService } from '../../providers/conference-service';
 
@@ -27,7 +27,8 @@ export class NavigatePage {
         public navCtrl: NavController,
         public navParams: NavParams,
         public platform: Platform,
-        public conferenceService: ConferenceService) { }
+        public conferenceService: ConferenceService,
+        public loadingCtrl: LoadingController) { }
 
     ionViewDidEnter() {
         this.eventLocation = this.navCtrl.parent.viewCtrl.instance.data;
@@ -75,9 +76,12 @@ export class NavigatePage {
             }
         });
         if(this.platform.is('core')) return;
-
+        let loading = this.loadingCtrl.create({ spinner: 'circles' });
+        loading.present();
         this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
-            this.onMapLoad();
+            this.onMapLoad().then(() => {
+                loading.dismiss();
+            });
         });
     }
 
@@ -87,7 +91,7 @@ export class NavigatePage {
 
     onMapLoad() {
         console.log('Map is ready!');
-        this.conferenceService.load().then(data => {
+        return this.conferenceService.load().then(data => {
             this.map.clear();
             this.getLocationList(data.calendar).forEach((l) => {
                 let markerOptions: GoogleMapsMarkerOptions = {

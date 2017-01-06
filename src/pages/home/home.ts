@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import * as moment from 'moment';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { EventDetailsPage } from '../event-details/event-details';
 import { ConferenceService } from '../../providers/conference-service';
 
@@ -15,12 +15,18 @@ export class HomePage {
     public calendarEvents: any[];
     public groupedCalendarEvents: any[];
 
-    constructor(public navCtrl: NavController, public conferenceService: ConferenceService) {
+    constructor(
+        public navCtrl: NavController,
+        public conferenceService: ConferenceService,
+        public loadingCtrl: LoadingController) {
         this.loadCalendarEvents();
     }
 
     loadCalendarEvents() {
+        let loading = this.loadingCtrl.create({ spinner: 'circles' });
+        loading.present();
         this.conferenceService.load().then(data => {
+            loading.dismiss();
             data.calendar.forEach((i) => {
                 let start = moment(i.startDate).format('h:mma');
                 let end = moment(i.endDate).format('h:mma');
