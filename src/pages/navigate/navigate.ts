@@ -75,7 +75,7 @@ export class NavigatePage {
                 'bearing': 50
             }
         });
-        if(this.platform.is('core')) return;
+        if(this.platform.is('mobileweb')) return;
         let loading = this.loadingCtrl.create({ spinner: 'circles' });
         loading.present();
         this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
