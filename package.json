@@ -37,8 +37,8 @@
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
     "cordova-plugin-googlemaps",
-    "call-number",
-    "cordova-plugin-email"
+    "cordova-plugin-email",
+    "call-number"
   ],
   "cordovaPlatforms": [
     {
