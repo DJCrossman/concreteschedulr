@@ -35,20 +35,22 @@
     "cordova-plugin-console",
     "cordova-plugin-statusbar",
     "cordova-plugin-device",
-    "cordova-plugin-splashscreen",
     "cordova-plugin-googlemaps",
-    "cordova-plugin-email",
-    "call-number"
+    {
+      "locator": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
+      "id": "com.googlemaps.ios"
+    },
+    "cordova-plugin-splashscreen"
   ],
   "cordovaPlatforms": [
     {
       "platform": "ios",
-      "version": "",
+      "version": "4.3.1",
       "locator": "ios"
     },
     {
       "platform": "android",
-      "version": "",
+      "version": "6.1.0",
       "locator": "android"
     }
   ],
