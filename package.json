@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "concreteschedulr",
+  "author": "concreteschedulr",
+  "homepage": "http://gnctr2017.com/",
   "private": true,
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
@@ -52,5 +52,5 @@
       "locator": "android"
     }
   ],
-  "description": "concreteschedulr: An Ionic project"
+  "description": "concreteschedulr: A schedule and event planner for GNCTR 2017"
 }
