@@ -25,6 +25,10 @@
           </ion-icon>
           <p>{{event.location.name}}</p>
         </ion-item>
+        <a ion-item *ngIf="event.link" href="{{event.link.href}}" text-wrap>
+          <ion-icon name="link" item-left></ion-icon>
+          <p>{{event.link.name}}</p>
+        </a>
       </ion-list>
     </ion-card-content>
   </ion-card>
