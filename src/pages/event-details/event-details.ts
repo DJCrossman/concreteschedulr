@@ -19,10 +19,9 @@ export class EventDetailsPage {
     }
 
     goToEventLocation(location) {
-        this.navCtrl.parent.viewCtrl.instance.setData(location).then(() => {
-            let navId = this.navCtrl.parent.viewCtrl.instance.tabIds.NavigatePage;
-            this.navCtrl.parent.select(navId);
-        });
+        this.navCtrl.parent.viewCtrl.instance.event = location;
+        let navId = this.navCtrl.parent.viewCtrl.instance.tabIds.NavigatePage;
+        this.navCtrl.parent.select(navId);
     }
 
 }

@@ -3,12 +3,10 @@ import { Component } from '@angular/core';
 import * as moment from 'moment';
 import { NavController, LoadingController } from 'ionic-angular';
 import { EventDetailsPage } from '../event-details/event-details';
-import { ConferenceService } from '../../providers/conference-service';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  providers: [ConferenceService]
+  templateUrl: 'home.html'
 })
 export class HomePage {
 
@@ -17,43 +15,39 @@ export class HomePage {
 
     constructor(
         public navCtrl: NavController,
-        public conferenceService: ConferenceService,
         public loadingCtrl: LoadingController) {
-        this.loadCalendarEvents();
+        navCtrl.parent.viewCtrl.instance.ready().then(() => {
+            this.loadCalendarEvents(navCtrl.parent.viewCtrl.instance.data);
+        });
     }
 
-    loadCalendarEvents() {
-        let loading = this.loadingCtrl.create({ spinner: 'circles' });
-        loading.present();
-        this.conferenceService.load().then(data => {
-            loading.dismiss();
-            data.calendar.forEach((i) => {
-                let start = moment(i.startDate).format('h:mma');
-                let end = moment(i.endDate).format('h:mma');
-                let range = moment(i.startDate).isSame(i.endDate, 'day') ?
-                    [moment(i.startDate).format('ddd MMMM Do, h:mma'), moment(i.endDate).format('h:mma')].join(' - ') :
-                    [moment(i.startDate).format('ddd MMMM Do, YYYY, h:mma'), moment(i.endDate).format('ddd MMMM Do, YYYY, h:mma')].join(' - ');
-                Object.assign(
-                    i,
-                    {
-                        startDateFormatted: start,
-                        endDateFormatted: end,
-                        dateRangeFormatted: range
-                    }
-                );
-            });
-            data.calendar.sort((a,b) => {
-                let aDate = new Date(a.startDate);
-                let bDate = new Date(b.startDate);
-                return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);
-            });
-            this.calendarEvents = data.calendar.filter((a) => {
-                let aDate = new Date(Date.now());
-                let bDate = new Date(a.endDate);
-                return aDate < bDate;
-            });
-            this.groupedCalendarEvents = this.groupEventsByDay(this.calendarEvents);
+    loadCalendarEvents(data) {
+        data.calendar.forEach((i) => {
+            let start = moment(i.startDate).format('h:mma');
+            let end = moment(i.endDate).format('h:mma');
+            let range = moment(i.startDate).isSame(i.endDate, 'day') ?
+                [moment(i.startDate).format('ddd MMMM Do, h:mma'), moment(i.endDate).format('h:mma')].join(' - ') :
+                [moment(i.startDate).format('ddd MMMM Do, YYYY, h:mma'), moment(i.endDate).format('ddd MMMM Do, YYYY, h:mma')].join(' - ');
+            Object.assign(
+                i,
+                {
+                    startDateFormatted: start,
+                    endDateFormatted: end,
+                    dateRangeFormatted: range
+                }
+            );
         });
+        data.calendar.sort((a,b) => {
+            let aDate = new Date(a.startDate);
+            let bDate = new Date(b.startDate);
+            return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);
+        });
+        this.calendarEvents = data.calendar.filter((a) => {
+            let aDate = new Date(Date.now());
+            let bDate = new Date(a.endDate);
+            return aDate < bDate;
+        });
+        this.groupedCalendarEvents = this.groupEventsByDay(this.calendarEvents);
     }
 
     goToEventDetail(event) {

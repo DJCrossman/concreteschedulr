@@ -8,30 +8,22 @@ import {
 } from 'ionic-native';
 import { Component } from '@angular/core';
 
-import { NavController, NavParams, Platform, LoadingController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { DefaultLocation } from '../../app/constants/location';
-import { ConferenceService } from '../../providers/conference-service';
 
 @Component({
   selector: 'page-navigate',
-  templateUrl: 'navigate.html',
-  providers: [ConferenceService]
+  templateUrl: 'navigate.html'
 })
-
 export class NavigatePage {
 
     public eventLocation: any;
     map: GoogleMap;
 
-    constructor(
-        public navCtrl: NavController,
-        public navParams: NavParams,
-        public platform: Platform,
-        public conferenceService: ConferenceService,
-        public loadingCtrl: LoadingController) { }
+    constructor(public navCtrl: NavController, public platform: Platform) { }
 
     ionViewDidEnter() {
-        this.eventLocation = this.navCtrl.parent.viewCtrl.instance.data;
+        this.eventLocation = this.navCtrl.parent.viewCtrl.instance.event;
         if(this.map) {
             if(this.platform.is('core')) return;
             this.map.one('resize');
@@ -75,12 +67,10 @@ export class NavigatePage {
                 'bearing': 50
             }
         });
-        if(this.platform.is('mobileweb')) return;
-        let loading = this.loadingCtrl.create({ spinner: 'circles' });
-        loading.present();
+        if(this.platform.is('mobileweb') || this.platform.is('core')) return;
         this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
             this.onMapLoad().then(() => {
-                loading.dismiss();
+                console.log('Map is ready!');
             });
         });
     }
@@ -90,8 +80,8 @@ export class NavigatePage {
     }
 
     onMapLoad() {
-        console.log('Map is ready!');
-        return this.conferenceService.load().then(data => {
+        return this.navCtrl.parent.viewCtrl.instance.ready().then(() => {
+            let data = this.navCtrl.parent.viewCtrl.instance.data;
             this.map.clear();
             this.getLocationList(data.calendar).forEach((l) => {
                 let markerOptions: GoogleMapsMarkerOptions = {

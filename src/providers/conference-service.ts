@@ -6,9 +6,17 @@ const Endpoint = 'https://concreteschedulr-1480880565642.firebaseio.com/.json';
 
 @Injectable()
 export class ConferenceService {
-    public data: any;
+    _data: any;
 
     constructor(public http: Http) { }
+
+    get data(): any {
+        return this._data;
+    }
+
+    set data(data: any) {
+        this._data = data;
+    }
 
     load() {
         if (this.data) {
