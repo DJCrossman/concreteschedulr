@@ -73,4 +73,9 @@ export class HomePage {
         });
     }
 
+    get isVotingOpen() {
+        let today = new Date();
+        return today > new Date('2017-02-11T14:15:00Z') && today < new Date('2017-02-11T22:00:00Z');
+    }
+
 }

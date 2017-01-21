@@ -5,6 +5,16 @@
 </ion-header>
 
 <ion-content class="padding">
+    <a class="padding" ion-item *ngIf="isVotingOpen" href="https://goo.gl/forms/HrJ7oO5Rz3z3AOqs1">
+      <ion-card color="primary">
+        <ion-card-content>
+          <h2>
+            <ion-icon name="open" item-left></ion-icon>
+            Click here to vote for your favourite teams.
+          </h2>
+        </ion-card-content>
+      </ion-card>
+    </a>
 
     <ion-list *ngFor="let groupedEvents of groupedCalendarEvents; let j = index">
       <ion-list-header>{{groupedEvents.label}}</ion-list-header>
