@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.concreteschedulr750222" version="1.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.concreteschedulr750222" version="1.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>concreteschedulr</name>
   <description>A schedule and event planner for GNCTR.</description>
   <author email="david@crossman.io" href="http://crossman.io/">David Crossman</author>
@@ -67,9 +67,9 @@
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
   <platform name="wp8">
-    <icon src="resources/wp8/icon/ApplicationIcon.png" width="99" height="99"/>
-    <icon src="resources/wp8/icon/Background.png" width="159" height="159"/>
-    <splash src="resources/wp8/splash/SplashScreenImage.png" width="768" height="1280"/>
+    <icon height="99" src="resources/wp8/icon/ApplicationIcon.png" width="99"/>
+    <icon height="159" src="resources/wp8/icon/Background.png" width="159"/>
+    <splash height="1280" src="resources/wp8/splash/SplashScreenImage.png" width="768"/>
   </platform>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
@@ -95,6 +95,9 @@
     <variable name="API_KEY_FOR_IOS" value="AIzaSyCQ32ydbztWmU7O-Uh6vn2Y7YrIUsk05Cs"/>
     <variable name="NSLOCATIONWHENINUSEUSAGEDESCRIPTION" value="Show your location on the map"/>
     <variable name="NSLOCATIONALWAYSUSAGEDESCRIPTION" value="Trace your location on the map"/>
+  </plugin>
+  <plugin name="phonegap-plugin-push" spec="~1.9.2">
+    <variable name="SENDER_ID" value="236240123015"/>
   </plugin>
   <engine name="android" spec="~6.0.0"/>
   <engine name="ios" spec="~4.3.1"/>
