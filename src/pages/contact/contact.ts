@@ -9,7 +9,8 @@ import { ContactDetailsPage } from '../contact-details/contact-details';
 })
 export class ContactPage {
 
-    public contacts: Array<Object>;
+    public contacts: any[];
+    public socialMedia: any = {};
 
     constructor(public navCtrl: NavController) {
         this.loadContacts();
@@ -17,8 +18,9 @@ export class ContactPage {
 
     loadContacts() {
         this.navCtrl.parent.viewCtrl.instance.ready().then(() => {
-            let data = this.navCtrl.parent.viewCtrl.instance.data;
-            this.contacts = data.contacts;
+            let service = this.navCtrl.parent.viewCtrl.instance.service;
+            this.socialMedia = service.settings.socialMedia;
+            this.contacts = service.contacts;
         });
     }
 

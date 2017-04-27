@@ -16,7 +16,7 @@
       </ion-card>
     </a>
 
-    <ion-list *ngFor="let groupedEvents of groupedCalendarEvents; let j = index">
+    <ion-list *ngFor="let groupedEvents of groupedEvents; let j = index">
       <ion-list-header>{{groupedEvents.label}}</ion-list-header>
       <ion-card *ngFor="let item of groupedEvents.group; let i = index" (click)="goToEventDetail(item)">
 
@@ -36,86 +36,13 @@
 
       </ion-card>
     </ion-list>
-    <!-- TODO: Replace with better stuff -->
-    <ion-item text-wrap>
-      <ion-avatar item-left>
-        <img src="assets/img/logo.png">
-      </ion-avatar>
-      <h1>2017 Award Winners</h1>
-      <p>Thank you for attend GNCTR 2017.</p>
-      <p>We hope to see you next year!</p>
-    </ion-item>
-    <ion-list>
+
+    <ion-card *ngIf="groupedEvents.length === 0" class="inner-html-bound">
       <ion-item>
-        <h2>Overall</h2>
-        <h3>Overall Champions</h3>
-        <p>Queen’s University</p>
-        <h3>Second Overall</h3>
-        <p>University of Western Ontario</p>
-        <h3>Third Overall</h3>
-        <p>University of Calgary</p>
-        <h3>Best New Team</h3>
-        <p>University of Regina</p>
-        <h3>Best Non Competing Team</h3>
-        <p>University of Manitoba Alumni </p>
-        <h3>Most Improved Team</h3>
-        <p>Queen’s University </p>
+        <div class="inner-html-bound" [innerHTML]="settings.homeScreen">
+
+        </div>
       </ion-item>
-      <ion-item>
-        <h2>Design</h2>
-        <h3>Most Sustainable Team</h3>
-        <p>Queen’s University</p>
-        <h3>Best Theoretical Toboggan</h3>
-        <p>University of Western Ontario</p>
-        <h3>Best Concrete Mix Design</h3>
-        <p>University of Western Ontario</p>
-        <h3>Best Concrete Reinforcement Design</h3>
-        <p>University of Western Ontario</p>
-        <h3>Best Braking Design</h3>
-        <p>University of Ottawa</p>
-        <h3>Best Steering Design</h3>
-        <p>Red River College</p>
-        <h3>Most Original/Innovative Design</h3>
-        <p>University of British Columbia Okanagan</p>
-      </ion-item>
-      <ion-item>
-        <h2>Technical</h2>
-        <h3>Best Technical Report</h3>
-        <p>University of Western Ontario</p>
-        <h3>Best Technical Display</h3>
-        <p>University of British Columbia Okanagan</p>
-        <h3>Best Technical Presentation</h3>
-        <p>University of Alberta</p>
-      </ion-item>
-      <ion-item>
-        <h2>Race Performance</h2>
-        <h3>Best Performing Toboggan</h3>
-        <p>Queen’s University</p>
-        <h3>Best Steering Toboggan</h3>
-        <p>Southern Alberta Institute of Technology </p>
-        <h3>Best Braking Toboggan</h3>
-        <p>University of Western Ontario</p>
-        <h3>King of the Hill</h3>
-        <p>Southern Alberta Institute of Technology</p>
-        <h3>Fastest Run Time</h3>
-        <p>Southern Alberta Institute of Technology</p>
-      </ion-item>
-      <ion-item>
-        <h2>Spirit</h2>
-        <h3>Best Team Spirit</h3>
-        <p>University of Calgary</p>
-        <h3>Best Theme Costumes</h3>
-        <p>University of Calgary</p>
-      </ion-item>
-      <ion-item>
-        <h2>Voting</h2>
-        <h3>People’s Choice</h3>
-        <p>University of Calgary</p>
-        <h3>Most Aesthetically Pleasing Toboggan</h3>
-        <p>University of British Columbia Okanagan</p>
-        <h3>Most Spectacular Run</h3>
-        <p>Queen’s University</p>
-      </ion-item>
-    </ion-list>
+    </ion-card>
 
 </ion-content>

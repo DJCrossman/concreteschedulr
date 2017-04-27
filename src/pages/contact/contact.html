@@ -9,17 +9,21 @@
 <ion-content>
   <ion-list>
     <ion-list-header>Follow us on the Social Media</ion-list-header>
-    <a ion-item href="https://twitter.com/gnctr2017">
+    <a ion-item *ngIf="socialMedia.twitter" href="https://twitter.com/{{socialMedia.twitter}}">
         <ion-icon name="logo-twitter" item-left></ion-icon>
-        @gnctr2017
+        @{{socialMedia.twitter}}
     </a>
-    <a ion-item href="https://www.facebook.com/gnctr2017">
+    <a ion-item *ngIf="socialMedia.facebook" href="https://www.facebook.com/{{socialMedia.facebook}}">
         <ion-icon name="logo-facebook" item-left></ion-icon>
-        @gnctr2017
+        {{socialMedia.facebook}}
     </a>
-    <a ion-item href="https://www.instagram.com/gnctr2017">
+    <a ion-item *ngIf="socialMedia.instagram" href="https://www.instagram.com/{{socialMedia.instagram}}">
         <ion-icon name="logo-instagram" item-left></ion-icon>
-        @gnctr2017
+        @{{socialMedia.instagram}}
+    </a>
+    <a ion-item *ngIf="socialMedia.web" href="{{socialMedia.web}}">
+        <ion-icon name="link" item-left></ion-icon>
+        {{socialMedia.web}}
     </a>
   </ion-list>
     <ion-list>

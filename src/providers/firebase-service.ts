@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { firebaseObjectToArray } from '../utilities';
 import 'rxjs/add/operator/map';
 
 const Endpoint = 'https://concreteschedulr-1480880565642.firebaseio.com/.json';
 
 @Injectable()
-export class ConferenceService {
+export class FirebaseDataService {
     _data: any;
 
     constructor(public http: Http) { }
 
-    get data(): any {
+    private get data(): any {
         return this._data;
     }
 
-    set data(data: any) {
+    private set data(data: any) {
         this._data = data;
     }
 
@@ -30,6 +31,18 @@ export class ConferenceService {
                     resolve(this.data);
                 });
         });
+    }
+
+    get calendar() {
+      return Array.isArray(this.data.calendar) ? this.data.calendar : firebaseObjectToArray(this.data.calendar);
+    }
+
+    get contacts() {
+      return Array.isArray(this.data.contacts) ? this.data.contacts : firebaseObjectToArray(this.data.contacts);
+    }
+
+    get settings() {
+      return this.data.settings;
     }
 
 }

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ConferenceService } from '../../providers/conference-service';
+import { FirebaseDataService } from '../../providers/firebase-service';
 
 @Component({
   selector: 'event-details',
   templateUrl: 'event-details.html',
-  providers: [ConferenceService]
+  providers: [FirebaseDataService]
 })
 export class EventDetailsPage {
 
@@ -14,7 +14,7 @@ export class EventDetailsPage {
     constructor(
         private navCtrl: NavController,
         public navParams: NavParams,
-        public conferenceService: ConferenceService) {
+        public FirebaseDataService: FirebaseDataService) {
         this.event = navParams.data;
     }
 

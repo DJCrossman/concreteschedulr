@@ -10,19 +10,22 @@ import { EventDetailsPage } from '../event-details/event-details';
 })
 export class HomePage {
 
-    public calendarEvents: any[];
-    public groupedCalendarEvents: any[];
+    public events: any[];
+    public groupedEvents: any[] = [];
+    public settings: any = {};
 
     constructor(
         public navCtrl: NavController,
         public loadingCtrl: LoadingController) {
         navCtrl.parent.viewCtrl.instance.ready().then(() => {
-            this.loadCalendarEvents(navCtrl.parent.viewCtrl.instance.data);
+            let service = this.navCtrl.parent.viewCtrl.instance.service;
+            this.settings = service.settings;
+            this.loadCalendarEvents(service.calendar);
         });
     }
 
-    loadCalendarEvents(data) {
-        data.calendar.forEach((i) => {
+    loadCalendarEvents(calendar) {
+        calendar.forEach((i) => {
             let start = moment(i.startDate).format('h:mma');
             let end = moment(i.endDate).format('h:mma');
             let range = moment(i.startDate).isSame(i.endDate, 'day') ?
@@ -37,30 +40,30 @@ export class HomePage {
                 }
             );
         });
-        data.calendar.sort((a,b) => {
+        calendar.sort((a,b) => {
             let aDate = new Date(a.startDate);
             let bDate = new Date(b.startDate);
             return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);
         });
-        this.calendarEvents = data.calendar.filter((a) => {
-            let aDate = new Date(Date.now());
-            let bDate = new Date(a.endDate);
-            return aDate < bDate;
-        });
-        this.groupedCalendarEvents = this.groupEventsByDay(this.calendarEvents);
+        // this.events = calendar.filter((a) => {
+        //     let aDate = new Date(Date.now());
+        //     let bDate = new Date(a.endDate);
+        //     return aDate < bDate;
+        // });
+        this.groupedEvents = this.getGroupedEventsByDay(this.events);
     }
 
     goToEventDetail(event) {
         this.navCtrl.push(EventDetailsPage, event);
     }
 
-    groupEventsByDay(calendar) {
+    getGroupedEventsByDay(calendar) {
         let eventGroupEvents = [];
         let groupBy = (xs, key) => {
-            return xs.reduce((rv, x) => {
+            return xs ? xs.reduce((rv, x) => {
                 (rv[moment(x[key]).format('LL')] = rv[moment(x[key]).format('LL')] || []).push(x);
                 return rv;
-            }, {});
+            }, {}) : '';
         };
         let groupedObject = groupBy(calendar, 'startDate');
         Object.keys(groupedObject).forEach((k) => {
