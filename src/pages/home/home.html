@@ -5,13 +5,11 @@
 </ion-header>
 
 <ion-content class="padding">
-    <a class="padding" ion-item *ngIf="isVotingOpen" href="https://goo.gl/forms/HrJ7oO5Rz3z3AOqs1">
+    <a class="padding" ion-item *ngIf="isVotingOpen" href="{{settings.voting.link}}">
       <ion-card color="primary">
-        <ion-card-content>
-          <h2>
-            <ion-icon name="open" item-left></ion-icon>
-            Click here to vote for your favourite teams.
-          </h2>
+        <ion-card-content class="">
+          <ion-icon name="open" item-left></ion-icon>
+          {{settings.voting.message || "Click here to vote."}}
         </ion-card-content>
       </ion-card>
     </a>
@@ -38,10 +36,12 @@
     </ion-list>
 
     <ion-card *ngIf="groupedEvents.length === 0" class="inner-html-bound">
-      <ion-item>
+      <ion-item *ngIf="!!settings.homeScreen">
         <div class="inner-html-bound" [innerHTML]="settings.homeScreen">
-
         </div>
+      </ion-item>
+      <ion-item *ngIf="!settings.homeScreen">
+        <p>No events found.</p>
       </ion-item>
     </ion-card>
 

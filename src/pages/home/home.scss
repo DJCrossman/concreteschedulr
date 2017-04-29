@@ -1,5 +1,10 @@
 page-home {
   .inner-html-bound {
     white-space: normal;
+
+    ul {
+      list-style-type: none;
+      display: inline;
+    }
   }
 }

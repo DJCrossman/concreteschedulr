@@ -25,32 +25,37 @@ export class HomePage {
     }
 
     loadCalendarEvents(calendar) {
-        calendar.forEach((i) => {
-            let start = moment(i.startDate).format('h:mma');
-            let end = moment(i.endDate).format('h:mma');
-            let range = moment(i.startDate).isSame(i.endDate, 'day') ?
-                [moment(i.startDate).format('ddd MMMM Do, h:mma'), moment(i.endDate).format('h:mma')].join(' - ') :
-                [moment(i.startDate).format('ddd MMMM Do, YYYY, h:mma'), moment(i.endDate).format('ddd MMMM Do, YYYY, h:mma')].join(' - ');
-            Object.assign(
-                i,
-                {
-                    startDateFormatted: start,
-                    endDateFormatted: end,
-                    dateRangeFormatted: range
-                }
-            );
-        });
-        calendar.sort((a,b) => {
-            let aDate = new Date(a.startDate);
-            let bDate = new Date(b.startDate);
-            return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);
-        });
-        // this.events = calendar.filter((a) => {
-        //     let aDate = new Date(Date.now());
-        //     let bDate = new Date(a.endDate);
-        //     return aDate < bDate;
-        // });
-        this.groupedEvents = this.getGroupedEventsByDay(this.events);
+      let loader = this.loadingCtrl.create({
+        content: "Please wait..."
+      });
+      loader.present();
+      this.events = calendar.filter((a) => {
+        let aDate = new Date(Date.now());
+        let bDate = new Date(a.endDate);
+        return aDate < bDate;
+      });
+      this.events.forEach((i) => {
+        let start = moment(i.startDate).format('h:mma');
+        let end = moment(i.endDate).format('h:mma');
+        let range = moment(i.startDate).isSame(i.endDate, 'day') ?
+            [moment(i.startDate).format('ddd MMMM Do, h:mma'), moment(i.endDate).format('h:mma')].join(' - ') :
+            [moment(i.startDate).format('ddd MMMM Do, YYYY, h:mma'), moment(i.endDate).format('ddd MMMM Do, YYYY, h:mma')].join(' - ');
+        Object.assign(
+            i,
+            {
+                startDateFormatted: start,
+                endDateFormatted: end,
+                dateRangeFormatted: range
+            }
+        );
+      });
+      this.events.sort((a,b) => {
+        let aDate = new Date(a.startDate);
+        let bDate = new Date(b.startDate);
+        return aDate < bDate ? -1 : (aDate > bDate ? 1 : 0);
+      });
+      this.groupedEvents = this.getGroupedEventsByDay(this.events);
+      loader.dismiss();
     }
 
     goToEventDetail(event) {
@@ -77,8 +82,10 @@ export class HomePage {
     }
 
     get isVotingOpen() {
+        if (!this.settings.voting) return false;
+        if (!this.settings.voting.startDate && this.settings.voting.endDate) return false;
         let today = new Date();
-        return today > new Date('2017-02-11T14:15:00Z') && today < new Date('2017-02-11T22:00:00Z');
+        return today > new Date(this.settings.voting.startDate) && today < new Date(this.settings.voting.endDate);
     }
 
 }
