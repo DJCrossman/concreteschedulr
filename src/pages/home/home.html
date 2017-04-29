@@ -13,7 +13,11 @@
         </ion-card-content>
       </ion-card>
     </a>
+    <ion-refresher (ionRefresh)="load($event)">
+      <ion-refresher-content>
 
+      </ion-refresher-content>
+    </ion-refresher>
     <ion-list *ngFor="let groupedEvents of groupedEvents; let j = index">
       <ion-list-header>{{groupedEvents.label}}</ion-list-header>
       <ion-card *ngFor="let item of groupedEvents.group; let i = index" (click)="goToEventDetail(item)">

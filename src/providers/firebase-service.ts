@@ -20,17 +20,14 @@ export class FirebaseDataService {
     }
 
     load() {
-        if (this.data) {
-            return Promise.resolve(this.data);
-        }
-        return new Promise(resolve => {
-            this.http.get(Endpoint)
-                .map(res => res.json())
-                .subscribe(data => {
-                    this.data = data;
-                    resolve(this.data);
-                });
-        });
+      return new Promise(resolve => {
+        this.http.get(Endpoint)
+          .map(res => res.json())
+          .subscribe(data => {
+            this.data = data;
+            resolve(this.data);
+          });
+      });
     }
 
     get calendar() {
